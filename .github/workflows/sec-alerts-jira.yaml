@@ -1,0 +1,67 @@
+name: GitHub Security Alerts for Jira
+
+on:
+  # schedule:
+  #   - cron:  '*/15 * * * *'
+  push
+
+jobs:
+  syncSecurityAlerts:
+    name: "Get security alerts for this repo"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Run GraphQL query against GH 4.x API"
+        uses: octokit/graphql-action@v2.x
+        id: get_sec_alerts
+        with:
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
+          query: |
+            query alerts($owner: String!, $repo: String!) {
+              repository(owner: $owner, name: $repo) {
+                vulnerabilityAlerts(first: 100) {
+                  nodes {
+                    securityVulnerability {
+                      advisory {
+                        description
+                        identifiers {
+                          type
+                          value
+                        }
+                        references {
+                          url
+                        }
+                        severity
+                        summary
+                      }
+                      firstPatchedVersion {
+                        identifier
+                      }
+                      package {
+                        name
+                        ecosystem
+                      }
+                      severity
+                      updatedAt
+                      vulnerableVersionRange
+                    }
+                    repository {
+                      nameWithOwner
+                    }
+                    vulnerableManifestFilename
+                    vulnerableManifestPath
+                    vulnerableRequirements
+                  }
+                }
+              }
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GitHubSecurityToken }}
+      - name: "Debug output"
+        run: "echo 'data: ${{ steps.get_sec_alerts.outputs.data }}'"
+      - name: "Sync alert data to Jira tickets"
+        uses: Sample-account-github-jira/Todo-Application@master
+        with:
+          alert_data: ${{ steps.get_sec_alerts.outputs.data }}
+        env:
+          JIRA_TOKEN: ${{ secrets.JiraApiToken }}
