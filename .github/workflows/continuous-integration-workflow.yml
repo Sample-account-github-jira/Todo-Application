@@ -1,0 +1,20 @@
+name: GitHub Security Alerts for Jira
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  syncSecurityAlerts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Sync security alerts to Jira issues"
+        uses: Sample-account-github-jira/Todo-Application
+        env:
+          GH_SECURITY_TOKEN: ${{ secrets.GitHubSecurityToken }}
+          JIRA_TOKEN: ${{ secrets.JiraApiToken }}
+          JIRA_HOST: https://manthansshah.atlassian.net
+          JIRA_USER: manthan.shah@galepartners.com
+          JIRA_PROJECT: ProjectAlert
+          JIRA_ISSUE_TYPE: Security
+          JIRA_WATCHERS: manthan.shah@galepartners.com,shahmanthan1209@gmail.com
