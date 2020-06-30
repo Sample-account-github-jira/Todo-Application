@@ -1,6 +1,6 @@
 name: 'Sync GitHub Security Alerts with Jira'
 description: 'Synchronize the current repo alert state with JIRA and creates tickets accordingly.'
-author: 'reload'
+author: 'shahmanthan1209'
 outputs:
   result:
     description: 'A string summarizing actions performed'
@@ -9,4 +9,4 @@ runs:
   image: 'Dockerfile'
 branding:
   icon: 'rotate-cw'
-  color: 'green
+  color: 'green'
