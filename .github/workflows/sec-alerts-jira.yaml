@@ -15,6 +15,6 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JiraApiToken }}
           JIRA_HOST: https://manthansshah.atlassian.net
           JIRA_USER: manthan.shah@galepartners.com
-          JIRA_PROJECT: ProjectAlert
-          JIRA_ISSUE_TYPE: BUG
+          JIRA_PROJECT: PROJ
+          JIRA_ISSUE_TYPE: Task
           JIRA_WATCHERS: manthan.shah@galepartners.com
