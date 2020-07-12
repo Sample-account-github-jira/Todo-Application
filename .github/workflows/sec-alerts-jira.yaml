@@ -4,64 +4,17 @@ on:
   # schedule:
   #   - cron:  '*/15 * * * *'
   push
-
 jobs:
   syncSecurityAlerts:
-    name: "Get security alerts for this repo"
     runs-on: ubuntu-latest
     steps:
-      - name: "Run GraphQL query against GH 4.x API"
-        uses: octokit/graphql-action@v2.x
-        id: get_sec_alerts
-        with:
-          owner: ${{ github.event.repository.owner.name }}
-          repo: ${{ github.event.repository.name }}
-          query: |
-            query alerts($owner: String!, $repo: String!) {
-              repository(owner: $owner, name: $repo) {
-                vulnerabilityAlerts(first: 100) {
-                  nodes {
-                    securityVulnerability {
-                      advisory {
-                        description
-                        identifiers {
-                          type
-                          value
-                        }
-                        references {
-                          url
-                        }
-                        severity
-                        summary
-                      }
-                      firstPatchedVersion {
-                        identifier
-                      }
-                      package {
-                        name
-                        ecosystem
-                      }
-                      severity
-                      updatedAt
-                      vulnerableVersionRange
-                    }
-                    repository {
-                      nameWithOwner
-                    }
-                    vulnerableManifestFilename
-                    vulnerableManifestPath
-                    vulnerableRequirements
-                  }
-                }
-              }
-            }
+      - name: "Sync security alerts to Jira issues"
+        uses: reload/github-security-jira@v1.x
         env:
-          GITHUB_TOKEN: ${{ secrets.GitHubSecurityToken }}
-      - name: "Debug output"
-        run: "echo 'data: ${{ steps.get_sec_alerts.outputs.data }}'"
-      - name: "Sync alert data to Jira tickets"
-        uses: reload/github-security-jira@feature/gql-lookup
-        with:
-          alert_data: ${{ steps.get_sec_alerts.outputs.data }}
-        env:
+          GH_SECURITY_TOKEN: ${{ secrets.GitHubSecurityToken }}
           JIRA_TOKEN: ${{ secrets.JiraApiToken }}
+          JIRA_HOST: https://manthansshah.atlassian.net
+          JIRA_USER: manthan.shah@galepartners.com
+          JIRA_PROJECT: PROJ
+          JIRA_ISSUE_TYPE: Security
+          JIRA_WATCHERS: manthan.shah@galepartners.com
