@@ -16,6 +16,6 @@ jobs:
           JIRA_HOST: https://manthansshah.atlassian.net
           JIRA_USER: manthan.shah@galepartners.com
           JIRA_PROJECT: PROJ
-          JIRA_ISSUE_TYPE: Security
+          JIRA_ISSUE_TYPE: TASK
           JIRA_WATCHERS: manthan.shah@galepartners.com
-          JIRA_RESTRICTED_COMMENT_ROLE: Administrators
+          #JIRA_RESTRICTED_COMMENT_ROLE: Administrators
