@@ -15,7 +15,7 @@ stages {
               $class: 'GitSCM',
               branches: [
                 [
-                  name: '*/develop'
+                  name: '*/master'
                 ]
               ],
               doGenerateSubmoduleConfigurations: false,
