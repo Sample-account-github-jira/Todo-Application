@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Sync security alerts to Jira issues"
-        uses: reload/github-security-jira@v1.x
+        uses: Gale43/reload-github-security-jira@v1.x
         env:
           GH_SECURITY_TOKEN: ${{ secrets.GitHubSecurityToken }}
           JIRA_TOKEN: ${{ secrets.JiraApiToken }}
@@ -18,4 +18,5 @@ jobs:
           JIRA_PROJECT: DESK
           JIRA_ISSUE_TYPE: Task
           JIRA_WATCHERS: manthan.shah@galepartners.com
+          JIRA_COMPONENT: TestComponent
           #JIRA_RESTRICTED_COMMENT_ROLE: Administrators
