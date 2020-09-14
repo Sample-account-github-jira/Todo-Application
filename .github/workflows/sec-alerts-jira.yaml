@@ -14,9 +14,9 @@ jobs:
           GH_SECURITY_TOKEN: ${{ secrets.GitHubSecurityToken }}
           JIRA_TOKEN: ${{ secrets.JiraApiToken }}
           JIRA_HOST: https://manthansshah.atlassian.net
-          JIRA_USER: manthan.shah@galepartners.com
+          JIRA_USER: jira-gale-bot@galepartners.com
           JIRA_PROJECT: PROJ
           JIRA_ISSUE_TYPE: Security
-          JIRA_WATCHERS: manthan.shah@galepartners.com
-          JIRA_COMPONENTS: TestComponent
+          #JIRA_WATCHERS: jira-gale-bot@galepartners.com
+          #JIRA_COMPONENTS: TestComponent
           #JIRA_RESTRICTED_COMMENT_ROLE: Administrators
